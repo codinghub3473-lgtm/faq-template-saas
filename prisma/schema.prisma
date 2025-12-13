@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String?
+  role      String   @default("user")
+  createdAt DateTime @default(now())
+  templates Template[]
+  projects  Project[]
+}
+
+model Template {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  type        String   // free | premium
+  priceCents  Int? 
+  previewUrl  String?
+  json        Json
+  authorId    String?
+  author      User?    @relation(fields: [authorId], references: [id])
+  createdAt   DateTime @default(now())
+  tags        String?
+}
+
+model Project {
+  id         String   @id @default(cuid())
+  userId     String
+  templateId String?
+  json       Json
+  thumbnail  String?
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+  template   Template? @relation(fields: [templateId], references: [id])
+}
+
+model Purchase {
+  id         String   @id @default(cuid())
+  userId     String
+  templateId String
+  stripeSessionId String?
+  amountCents Int
+  status     String
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+  template   Template @relation(fields: [templateId], references: [id])
+}
