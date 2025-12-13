@@ -21,7 +21,7 @@
     "next-auth": "4.22.1",
     "aws-sdk": "2.1330.0",
     "prisma": "4.21.0",
-    "@prisma/client": "4.21.0",
+    "@prisma/client": "^4.21.2",
     "bcrypt": "5.1.0",
     "pg": "8.11.0",
     "formidable": "2.1.1",
