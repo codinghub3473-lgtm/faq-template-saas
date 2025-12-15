@@ -4,9 +4,8 @@ export default function AdminPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [password, setPassword] = useState('');
   
-  // Simple password check
   const handleLogin = () => {
-    if (password === 'admin123') { // Temporary password
+    if (password === 'admin123') {
       setIsLoggedIn(true);
       localStorage.setItem('adminLoggedIn', 'true');
     } else {
@@ -15,7 +14,6 @@ export default function AdminPage() {
   };
 
   useEffect(() => {
-    // Check if already logged in
     if (localStorage.getItem('adminLoggedIn') === 'true') {
       setIsLoggedIn(true);
     }
@@ -55,12 +53,34 @@ export default function AdminPage() {
         <p>Here you can manage your FAQ content.</p>
         
         <div style={styles.links}>
+          {/* Editor Link - This should work */}
           <a href="/editor" style={styles.linkButton}>
             Go to Editor
           </a>
-          <a href="/api/faqs" style={styles.linkButton}>
-            View FAQs API
+          
+          {/* Check API Routes */}
+          <a href="/api" style={styles.linkButton}>
+            Check API Routes
           </a>
+          
+          {/* Direct links to test */}
+          <a 
+            href="https://faq-template-saas-ghkz.vercel.app/editor" 
+            target="_blank" 
+            style={styles.linkButton}
+          >
+            Open Editor (New Tab)
+          </a>
+        </div>
+        
+        <div style={styles.infoBox}>
+          <h3>Available Pages:</h3>
+          <ul>
+            <li><strong>/</strong> - Home Page</li>
+            <li><strong>/admin</strong> - This Page</li>
+            <li><strong>/editor</strong> - Editor Page</li>
+            <li><strong>/api/*</strong> - API Routes</li>
+          </ul>
         </div>
         
         <button onClick={handleLogout} style={styles.logoutButton}>
@@ -71,10 +91,10 @@ export default function AdminPage() {
   );
 }
 
-// Simple styling
+// Styling
 const styles = {
   container: {
-    maxWidth: '600px',
+    maxWidth: '800px',
     margin: '50px auto',
     padding: '20px',
     fontFamily: 'Arial, sans-serif',
@@ -84,6 +104,8 @@ const styles = {
     padding: '10px',
     margin: '10px 0',
     fontSize: '16px',
+    border: '1px solid #ddd',
+    borderRadius: '5px',
   },
   button: {
     width: '100%',
@@ -93,6 +115,8 @@ const styles = {
     border: 'none',
     fontSize: '16px',
     cursor: 'pointer',
+    borderRadius: '5px',
+    marginTop: '10px',
   },
   logoutButton: {
     padding: '10px 20px',
@@ -101,15 +125,20 @@ const styles = {
     border: 'none',
     marginTop: '20px',
     cursor: 'pointer',
+    borderRadius: '5px',
   },
   card: {
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#f9f9f9',
     padding: '30px',
     borderRadius: '10px',
     marginTop: '20px',
+    border: '1px solid #eee',
   },
   links: {
     marginTop: '20px',
+    display: 'flex',
+    gap: '10px',
+    flexWrap: 'wrap',
   },
   linkButton: {
     display: 'inline-block',
@@ -117,8 +146,14 @@ const styles = {
     backgroundColor: '#4CAF50',
     color: 'white',
     textDecoration: 'none',
-    marginRight: '10px',
     borderRadius: '5px',
+  },
+  infoBox: {
+    backgroundColor: '#fff',
+    padding: '15px',
+    borderRadius: '5px',
+    marginTop: '20px',
+    borderLeft: '4px solid #0070f3',
   },
   note: {
     marginTop: '20px',
